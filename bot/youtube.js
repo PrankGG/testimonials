@@ -1,7 +1,6 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 let comments = [];
-let i = 0;
 
 get("");
 
@@ -11,10 +10,12 @@ function get(continuation) {
   )
     .then((res) => res.json())
     .then((data) => {
-      i++;
+      data.comments = data.comments.filter((c) => {
+        return c.likeCount <= 10;
+      });
       comments = comments.concat(data.comments);
       get(data.continuation);
-      if (i === 3) {
+      if (comments.length >= 80) {
         console.log(`Downloaded ${comments.length} comments.`);
         fs.writeFileSync("comments.json", JSON.stringify(comments));
         process.exit();
