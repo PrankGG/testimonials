@@ -8,6 +8,11 @@ on:
       - ".github/workflows/youtube.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: "Youtube"
   cancel-in-progress: true
@@ -22,6 +27,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -29,20 +36,10 @@ jobs:
           cache: "npm"
       - run: npm i
       - run: node bot/youtube.js
-
-      - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-
-      - name: Push to Github
-        run: |
-          git config --global user.name "PrankGGBot"
-          git config --global user.email "${{secrets.GH_BOT_EMAIL}}"
-          git add -A
-          git commit -m "Update Youtube comments"
-          git pull
-          git push
+          path: "output"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
