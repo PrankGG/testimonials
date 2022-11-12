@@ -11,7 +11,7 @@ function get(continuation) {
     .then((res) => res.json())
     .then((data) => {
       data.comments = data.comments.filter((c) => {
-        return c.likeCount <= 10;
+        return c.likeCount >= 10;
       });
       comments = comments.concat(data.comments);
       get(data.continuation);
