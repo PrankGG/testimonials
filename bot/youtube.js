@@ -14,7 +14,7 @@ function get(continuation) {
       i++;
       comments = comments.concat(data.comments);
       get(data.continuation);
-      if (i === 50) {
+      if (i === 3) {
         console.log(`Downloaded ${comments.length} comments.`);
         fs.writeFileSync("comments.json", JSON.stringify(comments));
         process.exit();
