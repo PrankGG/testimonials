@@ -1,13 +1,17 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: Youtube
 
 on:
   push:
+    branches: ["main"]
     paths:
       - "bot/**"
       - ".github/workflows/youtube.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: "Youtube"
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
