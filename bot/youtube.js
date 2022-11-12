@@ -16,7 +16,7 @@ function get(continuation) {
       get(data.continuation);
       if (i === 3) {
         console.log(`Downloaded ${comments.length} comments.`);
-        fs.writeFileSync("output/comments.json", JSON.stringify(comments));
+        fs.writeFileSync("comments.json", JSON.stringify(comments));
         process.exit();
       }
     });
