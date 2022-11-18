@@ -6,6 +6,10 @@ on:
     paths:
       - "bot/**"
       - ".github/workflows/youtube.yml"
+      
+  schedule:
+  - cron: "0 1 * * *"
+  
   workflow_dispatch:
 
 concurrency:
