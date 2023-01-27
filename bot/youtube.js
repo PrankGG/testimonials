@@ -12,7 +12,7 @@ function get(continuation) {
     .then((data) => {
       comments = comments.concat(data.comments);
       get(data.continuation);
-      if (comments.length >= 80) {
+      if (comments.length >= 200) {
         console.log(`Downloaded ${comments.length} comments.`);
         fs.writeFileSync("comments.json", JSON.stringify(comments));
         process.exit();
